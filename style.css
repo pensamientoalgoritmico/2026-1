@@ -82,30 +82,61 @@ li:hover::before {
   to { opacity: 0; transform: translate(-50%, -50%) scale(0); }
 }
 
-#tituloPrincipal span {
-  pointer-events: none; /* Evita que el span bloquee el mousemove */
+/* 1. Configuración del Título y Nombres para que puedan moverse */
+#tituloPrincipal span, 
+.magnet-item {
+  display: inline-block; /* Crucial: sin esto no aceptan 'transform' */
+  transition: transform 0.2s ease-out, color 0.3s ease;
+  will-change: transform; /* Ayuda al navegador a animar sin lag */
+  cursor: pointer;
+  position: relative;
+  z-index: 5;
 }
 
+/* 2. Estilos para la lista de estudiantes */
+#lista-estudiantes {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.magnet-item {
+  text-decoration: none;
+  font-family: sans-serif;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* 3. El efecto de rastro (nombres que salen al hacer click) */
 .trail-text {
-  position: fixed;
-  pointer-events: none;
+  position: fixed; /* Para que use las coordenadas X, Y del click */
+  pointer-events: none; /* Para que no bloquee otros clicks */
   font-family: 'Courier New', monospace;
   font-weight: bold;
-  font-size: 1.2rem;
-  color: #ff69b4; /* Rosa */
+  font-size: 1.5rem;
+  color: #ff69b4;
   text-transform: uppercase;
+  white-space: nowrap;
   z-index: 1000;
-  animation: floatUp 2s forwards ease-out;
-  opacity: 0;
+  /* La variable --rotation la inyectamos desde el JS */
+  animation: floatUp 2s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+/* 4. Animación del rastro */
 @keyframes floatUp {
   0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+  }
+  20% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -150%) scale(1.5) rotate(var(--rotation));
+    /* Se eleva y rota según la variable asignada */
+    transform: translate(-50%, -200%) scale(1.5) rotate(var(--rotation));
   }
 }
