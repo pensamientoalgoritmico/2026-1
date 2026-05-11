@@ -10,15 +10,12 @@ function normalizeText(text) {
     .replace(/\s+/g, "-");
 }
 
-let nombresEstudiantes = [];
-
 /**
  * 1. Carga de datos y generación de la lista
  */
 fetch("estudiantes.json")
   .then((response) => response.json())
   .then((data) => {
-    nombresEstudiantes = data.map((est) => est.first);
     const lista = document.getElementById("lista-estudiantes");
 
     data.forEach((est) => {
@@ -36,7 +33,6 @@ fetch("estudiantes.json")
       lista.appendChild(li);
     });
 
-    // Inicializar el título después de cargar los datos para asegurar orden
     prepararTitulo();
   });
 
@@ -50,7 +46,6 @@ function prepararTitulo() {
 
   texto.split("").forEach((letra) => {
     const span = document.createElement("span");
-    // Preservar espacios en blanco
     span.textContent = letra === " " ? "\u00A0" : letra;
     span.style.display = "inline-block";
     titulo.appendChild(span);
@@ -61,7 +56,6 @@ function prepararTitulo() {
  * 3. Efecto "Imán" (Repulsión) para Título y Nombres
  */
 document.addEventListener("mousemove", (e) => {
-  // Seleccionamos spans del título y enlaces de la lista
   const elementosAnimados = document.querySelectorAll(
     "#tituloPrincipal span, .magnet-item",
   );
@@ -78,46 +72,41 @@ document.addEventListener("mousemove", (e) => {
     const radioEfecto = 100;
 
     if (distance < radioEfecto) {
-      // Calcular fuerza de repulsión
       const fuerza = (radioEfecto - distance) / 2;
       const moveX = (distanceX / distance) * -fuerza;
       const moveY = (distanceY / distance) * -fuerza;
 
       el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      el.style.color = "#ff69b4"; // Cambia a rosa al acercarse
+      el.style.color = "#ff69b4";
     } else {
       el.style.transform = `translate(0, 0)`;
-      el.style.color = ""; // Vuelve al color original
+      el.style.color = "";
     }
   });
 });
 
 /**
- * 4. Efecto de Click: Rastro de nombres
+ * 4. Efecto de Click: Glifos Abstractos
  */
 document.body.addEventListener("click", (e) => {
-  // Evitar que se active si haces click en enlaces
   if (e.target.tagName === "A" || e.target.closest("#lista-estudiantes"))
     return;
 
-  const rastro = document.createElement("div");
-  rastro.classList.add("trail-text");
+  const figura = document.createElement("div");
+  figura.classList.add("trail-text"); // Reutilizamos la clase CSS para la animación
 
-  // Posición del click
-  rastro.style.left = `${e.clientX}px`;
-  rastro.style.top = `${e.clientY}px`;
+  // Caracteres especiales aleatorios (estilo original)
+  const caracteres = ["★", "✦", "❖", "✺", "✿", "☼", "∞", "♥", "✧", "☯"];
+  figura.textContent =
+    caracteres[Math.floor(Math.random() * caracteres.length)];
 
-  // Seleccionar un nombre aleatorio de la lista del semestre
-  const nombreAzar =
-    nombresEstudiantes[Math.floor(Math.random() * nombresEstudiantes.length)];
-  rastro.textContent = nombreAzar || "Algoritmos";
+  figura.style.left = `${e.clientX}px`;
+  figura.style.top = `${e.clientY}px`;
 
-  // Rotación aleatoria para la animación CSS
-  const rotacion = Math.random() * 40 - 20;
-  rastro.style.setProperty("--rotation", `${rotacion}deg`);
+  const rotacion = Math.random() * 80 - 40;
+  figura.style.setProperty("--rotation", `${rotacion}deg`);
 
-  document.body.appendChild(rastro);
+  document.body.appendChild(figura);
 
-  // Eliminar elemento después de que termine la animación (2s)
-  setTimeout(() => rastro.remove(), 2000);
+  setTimeout(() => figura.remove(), 2000);
 });

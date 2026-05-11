@@ -104,8 +104,6 @@ li:hover::before {
 
 .magnet-item {
   text-decoration: none;
-  font-family: sans-serif;
-  color: #333;
   font-size: 1.1rem;
 }
 
@@ -116,7 +114,7 @@ li:hover::before {
   font-family: 'Courier New', monospace;
   font-weight: bold;
   font-size: 1.5rem;
-  color: #ff69b4;
+  color: #8dd1ff;
   text-transform: uppercase;
   white-space: nowrap;
   z-index: 1000;
