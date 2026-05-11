@@ -133,3 +133,31 @@ li:hover::before {
     transform: translate(calc(-50% + var(--dest-x)), calc(-50% + var(--dest-y))) scale(1.2);
   }
 }
+/* 1. Por defecto, ocultamos el mensaje de error */
+#mensaje-escritorio {
+  display: none;
+}
+
+/* 2. Media Query para pantallas menores a 1024px */
+@media (max-width: 1023px) {
+  /* Ocultamos el cuerpo de la página (título, lista, etc.) */
+  #tituloPrincipal, 
+  #lista-estudiantes,
+  footer {
+    display: none !important;
+  }
+
+  /* Mostramos el mensaje de bloqueo */
+  #mensaje-escritorio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    background-color: #fff;
+    color: #ff69b4; /* Tu rosa característico */
+  }
+}
