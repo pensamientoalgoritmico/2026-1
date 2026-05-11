@@ -25,17 +25,17 @@
 p5.disableFriendlyErrors = true;
 
 // --- Variables globales ---
-let xScale = 0.015;  // Escala horizontal del ruido Perlin
-let yScale = 0.02;   // Escala vertical del ruido Perlin
+let xScale = 0.015; // Escala horizontal del ruido Perlin
+let yScale = 0.02; // Escala vertical del ruido Perlin
 
-let font;            // Fuente tipográfica (cargada en preload)
-let mic;             // Entrada de micrófono
-let fondo;           // Color de fondo (reservado para futuros usos)
-let m = 0;           // Contador horizontal para dibujar líneas de inicio
-let t = false;            // Estado modo grito: false = pantalla inicial, true = visualización activa
-let modoCalma = false;    // Estado modo calma: true = draw() llama calma() en cada frame
+let font; // Fuente tipográfica (cargada en preload)
+let mic; // Entrada de micrófono
+let fondo; // Color de fondo (reservado para futuros usos)
+let m = 0; // Contador horizontal para dibujar líneas de inicio
+let t = false; // Estado modo grito: false = pantalla inicial, true = visualización activa
+let modoCalma = false; // Estado modo calma: true = draw() llama calma() en cada frame
 let modoAnsiedad = false; // Estado modo ansiedad: true = draw() llama ansiedad() en cada frame
-let offset;           // Desplazamiento del ruido basado en el micrófono
+let offset; // Desplazamiento del ruido basado en el micrófono
 let modoTristeza = false; // Estado modo tristeza
 let modoFinal = false; // Estado modo fiinal
 //noprotect
@@ -44,7 +44,7 @@ let modoFinal = false; // Estado modo fiinal
 function preload() {
   // Cargar la fuente aquí evita demoras y errores al usarla en setup/draw
   // Referencia: https://p5js.org/reference/p5/loadFont/
-  font = loadFont("/Assets/CormorantInfant-VariableFont_wght (1).ttf");
+  font = loadFont("Assets/CormorantInfant-VariableFont_wght (1).ttf");
 }
 
 function setup() {
@@ -75,9 +75,9 @@ function setup() {
   textSize(35);
   text("Estado interno", windowWidth / 2 - 110, 40);
   textSize(50);
-  text("¿Cómo estás hoy?", windowWidth/2 -180, windowHeight / 2);
+  text("¿Cómo estás hoy?", windowWidth / 2 - 180, windowHeight / 2);
   textSize(25);
-  text("Clickea para empezar", windowWidth/2 -125, windowHeight / 2 + 35);
+  text("Clickea para empezar", windowWidth / 2 - 125, windowHeight / 2 + 35);
 }
 
 function draw() {
@@ -100,7 +100,7 @@ function draw() {
   if (modoTristeza === true) {
     tristeza();
   }
-    if (modoFinal === true) {
+  if (modoFinal === true) {
     final();
   }
 }
@@ -164,13 +164,13 @@ function ansiedad() {
       // Cuando n es alto → azul claro / lavanda
       // Cuando n es bajo → azul oscuro / morado profundo
       let r = n * 180; // componente rojo moderado (da el tono morado)
-      let g = n * 60;  // verde muy suprimido (evita verdes y grises neutros)
+      let g = n * 60; // verde muy suprimido (evita verdes y grises neutros)
       let b = n * 255; // azul al máximo (canal dominante)
 
       // Índice en el array: cada fila tiene width*4 valores,
       // cada columna avanza 4 posiciones (R, G, B, A)
       let idx = 4 * (x + y * width);
-      pixels[idx]     = r;
+      pixels[idx] = r;
       pixels[idx + 1] = g;
       pixels[idx + 2] = b;
       pixels[idx + 3] = 255; // Alpha: 255 = completamente opaco
@@ -253,10 +253,10 @@ function calma() {
   // Fondo rosa muy suave como base de la composición
   background(248, 232, 240);
 
-  let numOndas = 12;       // Cantidad de líneas de onda superpuestas
-  let amplitud = 80;       // Desplazamiento vertical máximo de cada onda (en píxeles)
-  let velocidad = 0.003;   // Velocidad de animación (más pequeño = movimiento más lento y suave)
-  let escalaX = 0.004;     // Detalle horizontal del ruido (más pequeño = curvas más amplias)
+  let numOndas = 12; // Cantidad de líneas de onda superpuestas
+  let amplitud = 80; // Desplazamiento vertical máximo de cada onda (en píxeles)
+  let velocidad = 0.003; // Velocidad de animación (más pequeño = movimiento más lento y suave)
+  let escalaX = 0.004; // Detalle horizontal del ruido (más pequeño = curvas más amplias)
 
   noFill();
   strokeWeight(2.5);
@@ -264,11 +264,11 @@ function calma() {
   // Paleta de colores rosados y magenta con transparencia
   // La superposición de colores semitransparentes crea profundidad visual
   let colores = [
-    color(231, 84, 128, 180),  // rosa medio
-    color(212, 96, 138, 160),  // rosa-magenta
+    color(231, 84, 128, 180), // rosa medio
+    color(212, 96, 138, 160), // rosa-magenta
     color(240, 144, 176, 140), // rosa claro
-    color(184, 64, 112, 120),  // magenta oscuro
-    color(200, 80, 130, 100),  // rosa profundo
+    color(184, 64, 112, 120), // magenta oscuro
+    color(200, 80, 130, 100), // rosa profundo
   ];
 
   for (let i = 0; i < numOndas; i++) {
@@ -308,13 +308,25 @@ function calma() {
 // distante y difusa — similar a la imagen de referencia pero en frío.
 function tristeza() {
   background(200, 160, 190); // rosa-morado para los bordes
-  
+
   let velocidad = 0.004; // Muy lento: el peso de la tristeza
 
   // El centro del gradiente se mueve suavemente con ruido Perlin
   // Dos semillas distintas (0, 100) garantizan movimientos independientes en X e Y
-  let cx = map(noise(frameCount * velocidad, 0),   0, 1, width  * 0.2, width  * 0.8);
-  let cy = map(noise(frameCount * velocidad, 100), 0, 1, height * 0.2, height * 0.8);
+  let cx = map(
+    noise(frameCount * velocidad, 0),
+    0,
+    1,
+    width * 0.2,
+    width * 0.8,
+  );
+  let cy = map(
+    noise(frameCount * velocidad, 100),
+    0,
+    1,
+    height * 0.2,
+    height * 0.8,
+  );
 
   // Radio máximo: lo suficientemente grande para cubrir toda la pantalla
   let rMax = dist(0, 0, width, height);
@@ -323,9 +335,9 @@ function tristeza() {
   // Centro: blanco lavanda muy pálido — como luz filtrada
   // Borde:  azul gris oscuro apagado — como tarde nublada
   let colorCentro = color(255, 220, 240); // rosa muy pálido, casi blanco
-  let colorMedio  = color(220, 160, 210); // malva suave
-  let colorBorde  = color(160, 100, 180); // morado profundo
-  
+  let colorMedio = color(220, 160, 210); // malva suave
+  let colorBorde = color(160, 100, 180); // morado profundo
+
   noStroke();
 
   // Dibujar de afuera hacia adentro para que los círculos internos queden encima
