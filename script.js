@@ -81,7 +81,7 @@ document.addEventListener("mousemove", (e) => {
       const moveY = (distanceY / distance) * -fuerza;
 
       span.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      span.style.color = "#ff69b4";
+      span.style.color = "#99ff00";
     } else {
       span.style.transform = `translate(0, 0)`;
       span.style.color = "";
