@@ -58,8 +58,8 @@ span.highlight{
 
 
 li:hover::before {
-  content: "✺ ";
-  color: #ff3700;
+  content: "🜻";
+  color: #8dd1ff;
   font-size: 1.5rem;
   margin-right: 6px;
 }
