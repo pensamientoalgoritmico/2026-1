@@ -1,22 +1,24 @@
+// Función de normalización (se mantiene igual para los enlaces)
 function normalizeText(text) {
   return text
-    .normalize("NFD") // separa caracteres con tildes
-    .replace(/[\u0300-\u036f]/g, "") // elimina tildes
-    .replace(/ñ/g, "n") // reemplaza ñ por n
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ñ/g, "n")
     .toLowerCase()
-    .replace(/\s+/g, "-"); // espacios por guiones
+    .replace(/\s+/g, "-");
 }
 
+// Cargar lista de estudiantes y preparar nombres para el efecto de click
+let nombresEstudiantes = [];
 fetch("estudiantes.json")
-  .then((response) => response.json())
+  .then((res) => res.json())
   .then((data) => {
+    nombresEstudiantes = data.map((est) => est.first); // Guardamos nombres para el efecto
     const lista = document.getElementById("lista-estudiantes");
     data.forEach((est) => {
       const li = document.createElement("li");
       const link = document.createElement("a");
-      const folderName = `${normalizeText(est.last)}-${normalizeText(
-        est.first
-      )}`;
+      const folderName = `${normalizeText(est.last)}-${normalizeText(est.first)}`;
       link.href = `estudiantes/${folderName}/index.html`;
       link.textContent = `${est.first} ${est.last}`;
       li.appendChild(link);
@@ -24,66 +26,62 @@ fetch("estudiantes.json")
     });
   });
 
+// --- EFECTO 1: Título Magnético ---
 const titulo = document.getElementById("tituloPrincipal");
-const texto = titulo.textContent;
-titulo.textContent = "";
+const contenido = titulo.textContent;
+titulo.innerHTML = "";
 
-texto.split("").forEach((letra) => {
+contenido.split("").forEach((char) => {
   const span = document.createElement("span");
-  span.textContent = letra;
+  span.textContent = char === " " ? "\u00A0" : char;
+  span.style.display = "inline-block";
+  span.style.transition = "transform 0.2s ease-out";
   titulo.appendChild(span);
 });
 
-const letras = titulo.querySelectorAll("span");
-let tiempo = 0;
+document.addEventListener("mousemove", (e) => {
+  const spans = titulo.querySelectorAll("span");
+  spans.forEach((span) => {
+    const rect = span.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
-function animar() {
-  tiempo += 0.045; // más lento
-  letras.forEach((span, i) => {
-    const desplazamiento = Math.sin(tiempo + i * 0.5) * 10;
-    span.style.transform = `translateY(${desplazamiento}px)`;
+    // Calcular distancia entre cursor y letra
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+    const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-    // Colores dinámicos para la estela tipo glitch
-    // const r = Math.floor(128 + 128 * Math.sin(tiempo + i));
-    // const g = Math.floor(128 + 128 * Math.sin(tiempo + i + 2));
-    // const b = Math.floor(128 + 128 * Math.sin(tiempo + i + 4));
-
-    // span.style.textShadow = `
-    //     0 ${desplazamiento / 2}px 8px rgba(${r},${g},${b},0.8),
-    //     0 ${desplazamiento / 2}px 15px rgba(${r},${g},${b},0.4)
-    //   `;
-    // span.style.transform = `translateY(${desplazamiento}px) rotate(${
-    //   Math.sin(tiempo + i) * 10
-    // }deg)`;
+    if (distance < 100) {
+      const force = (100 - distance) / 2;
+      const moveX = (distanceX / distance) * -force;
+      const moveY = (distanceY / distance) * -force;
+      span.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${moveX}deg)`;
+    } else {
+      span.style.transform = `translate(0, 0) rotate(0deg)`;
+    }
   });
-  requestAnimationFrame(animar);
-}
+});
 
-animar();
-
+// --- EFECTO 2: Estela de Nombres al Click ---
 document.body.addEventListener("click", (e) => {
-  // Evitar que se active si haces click en enlaces o lista
   if (e.target.tagName === "A" || e.target.closest("#lista-estudiantes"))
     return;
 
-  const figura = document.createElement("div");
-  figura.classList.add("figura");
+  const rastro = document.createElement("div");
+  rastro.className = "trail-text";
 
-  // Posición del click
-  figura.style.left = `${e.clientX}px`;
-  figura.style.top = `${e.clientY}px`;
+  // Elegir un nombre aleatorio de la nueva lista
+  const nombreAzar =
+    nombresEstudiantes[Math.floor(Math.random() * nombresEstudiantes.length)];
+  rastro.textContent = nombreAzar || "Algoritmos";
 
-  // Color: rosado o amarillo
-  const colores = ["#ff69b4", "#ffd700"]; // rosa y amarillo
-  figura.style.color = colores[Math.floor(Math.random() * colores.length)];
+  rastro.style.left = `${e.clientX}px`;
+  rastro.style.top = `${e.clientY}px`;
 
-  // Carácter especial aleatorio
-  const caracteres = ["★", "✦", "❖", "✺", "✿", "☼", "∞", "♥", "✧", "☯"];
-  figura.textContent =
-    caracteres[Math.floor(Math.random() * caracteres.length)];
+  // Rotación aleatoria para dinamismo
+  const rot = Math.random() * 40 - 20;
+  rastro.style.setProperty("--rotation", `${rot}deg`);
 
-  document.body.appendChild(figura);
-
-  // Eliminar después de 3s
-  setTimeout(() => figura.remove(), 8000);
+  document.body.appendChild(rastro);
+  setTimeout(() => rastro.remove(), 2000);
 });
