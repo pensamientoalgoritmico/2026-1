@@ -75,7 +75,7 @@ document.addEventListener("mousemove", (e) => {
       const moveY = (distanceY / distance) * -fuerza;
 
       el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      el.style.color = "#8dd1ff";
+      el.style.color = "#99ff00";
     } else {
       el.style.transform = `translate(0, 0)`;
       el.style.color = "";
@@ -90,7 +90,7 @@ document.body.addEventListener("click", (e) => {
   if (e.target.tagName === "A" || e.target.closest("#lista-estudiantes"))
     return;
 
-  const palabra = "DISEÑAR";
+  const palabra = "diseñar";
   const letras = palabra.split("");
   const radio = 60; // Radio del círculo en píxeles
 

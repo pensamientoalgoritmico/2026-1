@@ -110,9 +110,9 @@ li:hover::before {
 .trail-text {
   position: fixed;
   pointer-events: none;
-  font-family: 'Courier New', monospace;
+  font-family: 'Stack Sans Notch', monospace;
   font-weight: bold;
-  color: #ff69b4;
+  color: #99ff00;
   z-index: 1000;
   /* Animación que usa las variables calculadas en JS */
   animation: explodeCircle 2s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
