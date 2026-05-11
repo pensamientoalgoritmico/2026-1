@@ -1,0 +1,45 @@
+/* Plantilla tomada de Eevi Rutanen -Final project template, Aalto University */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:black;
+  color: white;
+  font-family: sans-serif;
+}
+canvas {
+  display: block;
+}
+
+/*este elemento centra el canvas */
+#canvasContainer{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#info{
+  margin: 60px;
+}
+
+h1{
+  font-weight: normal;
+}
+
+h2{
+   font-weight: normal;
+}
+
+#return{
+  color:white;
+  font-size:20px;
+  text-decoration:none;
+}
+
+#return:hover{
+  color: #39FF14
+}
+
+/* nuevos estilos personalizados a partir de acá */

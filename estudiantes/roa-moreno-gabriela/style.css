@@ -1,0 +1,51 @@
+/* Plantilla tomada de Eevi Rutanen - Final project template, Aalto University */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #4A0F18;
+  color: #F1E4DB;
+  font-family: "lora";
+}
+
+canvas {
+  display: block;
+}
+
+/* este elemento centra el canvas */
+#canvasContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#info {
+  margin: 60px;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+h2 {
+  font-weight: normal;
+}
+
+#return {
+  color: #F1E4DB;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+#return:hover {
+  color: #B88A2A;
+}
+
+/* nuevos estilos personalizados a partir de acá */
+
+@font-face {
+  font-family: 'lora';
+  src: url('fuentes/lora.ttf') format('truetype');
+}
