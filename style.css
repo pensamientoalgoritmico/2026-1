@@ -94,17 +94,18 @@ li:hover::before {
 }
 
 /* 2. Estilos para la lista de estudiantes */
-#lista-estudiantes {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.letra-magnetica {
+  display: inline-block; /* Obligatorio para transform */
+  transition: transform 0.2s ease-out, color 0.3s ease;
+  will-change: transform;
+  white-space: pre; /* Mantiene los espacios correctamente */
 }
 
-.magnet-item {
+/* Para que los enlaces no se vean raros al separar las letras */
+#lista-estudiantes a {
   text-decoration: none;
-  font-size: 1.1rem;
+  color: inherit;
+  display: block; /* O inline-block según tu diseño */
 }
 
 .trail-text {

@@ -24,8 +24,15 @@ fetch("estudiantes.json")
       const folderName = `${normalizeText(est.last)}-${normalizeText(est.first)}`;
 
       link.href = `estudiantes/${folderName}/index.html`;
-      link.textContent = `${est.first} ${est.last}`;
-      link.classList.add("magnet-item");
+
+      // --- NUEVO: Fragmentar nombre en letras ---
+      const nombreCompleto = `${est.first} ${est.last}`;
+      nombreCompleto.split("").forEach((letra) => {
+        const span = document.createElement("span");
+        span.textContent = letra === " " ? "\u00A0" : letra;
+        span.classList.add("letra-magnetica"); // Clase común para el efecto
+        link.appendChild(span);
+      });
 
       li.appendChild(link);
       lista.appendChild(li);
@@ -35,7 +42,7 @@ fetch("estudiantes.json")
   });
 
 /**
- * 2. Preparación del título
+ * 2. Preparación del título (letras individuales)
  */
 function prepararTitulo() {
   const titulo = document.getElementById("tituloPrincipal");
@@ -45,21 +52,20 @@ function prepararTitulo() {
   texto.split("").forEach((letra) => {
     const span = document.createElement("span");
     span.textContent = letra === " " ? "\u00A0" : letra;
-    span.style.display = "inline-block";
+    span.classList.add("letra-magnetica");
     titulo.appendChild(span);
   });
 }
 
 /**
- * 3. Efecto "Imán" (Repulsión)
+ * 3. Efecto "Imán" (Repulsión letra por letra)
  */
 document.addEventListener("mousemove", (e) => {
-  const elementosAnimados = document.querySelectorAll(
-    "#tituloPrincipal span, .magnet-item",
-  );
+  // Seleccionamos todos los spans con la clase común
+  const letras = document.querySelectorAll(".letra-magnetica");
 
-  elementosAnimados.forEach((el) => {
-    const rect = el.getBoundingClientRect();
+  letras.forEach((span) => {
+    const rect = span.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
@@ -67,52 +73,47 @@ document.addEventListener("mousemove", (e) => {
     const distanceY = e.clientY - centerY;
     const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-    const radioEfecto = 100;
+    const radioEfecto = 80; // Un poco más pequeño para precisión letra a letra
 
     if (distance < radioEfecto) {
       const fuerza = (radioEfecto - distance) / 2;
       const moveX = (distanceX / distance) * -fuerza;
       const moveY = (distanceY / distance) * -fuerza;
 
-      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      el.style.color = "#99ff00";
+      span.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      span.style.color = "#ff69b4";
     } else {
-      el.style.transform = `translate(0, 0)`;
-      el.style.color = "";
+      span.style.transform = `translate(0, 0)`;
+      span.style.color = "";
     }
   });
 });
 
 /**
- * 4. Efecto de Click: Círculo de la palabra "DISEÑAR"
+ * 4. Efecto de Click: Círculo de "DISEÑAR"
  */
 document.body.addEventListener("click", (e) => {
   if (e.target.tagName === "A" || e.target.closest("#lista-estudiantes"))
     return;
 
-  const palabra = "diseñar";
-  const letras = palabra.split("");
-  const radio = 60; // Radio del círculo en píxeles
+  const palabra = "algoritmo";
+  const radio = 70;
 
-  letras.forEach((letra, i) => {
+  palabra.split("").forEach((letra, i) => {
     const el = document.createElement("div");
     el.classList.add("trail-text");
     el.textContent = letra;
 
-    // Calcular posición en el círculo usando seno y coseno
-    const angulo = (i / letras.length) * (Math.PI * 2);
+    const angulo = (i / palabra.length) * (Math.PI * 2);
     const x = Math.cos(angulo) * radio;
     const y = Math.sin(angulo) * radio;
 
     el.style.left = `${e.clientX}px`;
     el.style.top = `${e.clientY}px`;
-
-    // Pasamos las coordenadas de destino a CSS mediante variables
     el.style.setProperty("--dest-x", `${x}px`);
     el.style.setProperty("--dest-y", `${y}px`);
 
     document.body.appendChild(el);
-
     setTimeout(() => el.remove(), 2000);
   });
 });
