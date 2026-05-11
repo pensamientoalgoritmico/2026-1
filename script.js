@@ -25,8 +25,6 @@ fetch("estudiantes.json")
 
       link.href = `estudiantes/${folderName}/index.html`;
       link.textContent = `${est.first} ${est.last}`;
-
-      // Clase para el efecto de imán
       link.classList.add("magnet-item");
 
       li.appendChild(link);
@@ -37,7 +35,7 @@ fetch("estudiantes.json")
   });
 
 /**
- * 2. Preparación del título (división en letras)
+ * 2. Preparación del título
  */
 function prepararTitulo() {
   const titulo = document.getElementById("tituloPrincipal");
@@ -53,7 +51,7 @@ function prepararTitulo() {
 }
 
 /**
- * 3. Efecto "Imán" (Repulsión) para Título y Nombres
+ * 3. Efecto "Imán" (Repulsión)
  */
 document.addEventListener("mousemove", (e) => {
   const elementosAnimados = document.querySelectorAll(
@@ -86,27 +84,35 @@ document.addEventListener("mousemove", (e) => {
 });
 
 /**
- * 4. Efecto de Click: Glifos Abstractos
+ * 4. Efecto de Click: Círculo de la palabra "DISEÑAR"
  */
 document.body.addEventListener("click", (e) => {
   if (e.target.tagName === "A" || e.target.closest("#lista-estudiantes"))
     return;
 
-  const figura = document.createElement("div");
-  figura.classList.add("trail-text"); // Reutilizamos la clase CSS para la animación
+  const palabra = "DISEÑAR";
+  const letras = palabra.split("");
+  const radio = 60; // Radio del círculo en píxeles
 
-  // Caracteres especiales aleatorios (estilo original)
-  const caracteres = ["★", "✦", "❖", "✺", "✿", "☼", "∞", "♥", "✧", "☯"];
-  figura.textContent =
-    caracteres[Math.floor(Math.random() * caracteres.length)];
+  letras.forEach((letra, i) => {
+    const el = document.createElement("div");
+    el.classList.add("trail-text");
+    el.textContent = letra;
 
-  figura.style.left = `${e.clientX}px`;
-  figura.style.top = `${e.clientY}px`;
+    // Calcular posición en el círculo usando seno y coseno
+    const angulo = (i / letras.length) * (Math.PI * 2);
+    const x = Math.cos(angulo) * radio;
+    const y = Math.sin(angulo) * radio;
 
-  const rotacion = Math.random() * 80 - 40;
-  figura.style.setProperty("--rotation", `${rotacion}deg`);
+    el.style.left = `${e.clientX}px`;
+    el.style.top = `${e.clientY}px`;
 
-  document.body.appendChild(figura);
+    // Pasamos las coordenadas de destino a CSS mediante variables
+    el.style.setProperty("--dest-x", `${x}px`);
+    el.style.setProperty("--dest-y", `${y}px`);
 
-  setTimeout(() => figura.remove(), 2000);
+    document.body.appendChild(el);
+
+    setTimeout(() => el.remove(), 2000);
+  });
 });
