@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memoria Fragmentada</title>
+
+  <!-- p5.js desde CDN -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+</head>
+<body>
+
+  <!-- Contenedor principal que organiza todo en pantalla -->
+  <div id="main-wrapper">
+
+    <!-- Columna izquierda: canvas -->
+    <div id="canvas-column">
+      <!-- El canvas de p5 se inyecta aquí -->
+      <div id="canvas-container"></div>
+
+      <!-- Botones en fila debajo del canvas -->
+      <div id="botones-container"></div>
+    </div>
+
+    <!-- Columna derecha: sliders numerados -->
+    <div id="sliders-column">
+
+      <div class="slider-item" id="slider1-container">
+        <span class="slider-label">01 — Memoria (Distorsión)</span>
+      </div>
+
+      <div class="slider-item" id="slider2-container">
+        <span class="slider-label">02 — Tiempo (Tamaño)</span>
+      </div>
+
+      <div class="slider-item" id="slider3-container">
+        <span class="slider-label">03 — Resonancia (Velocidad)</span>
+      </div>
+
+      <div class="slider-item" id="slider4-container">
+        <span class="slider-label">04 — Claridad (Opacidad)</span>
+      </div>
+
+      <div class="slider-item" id="slider5-container">
+        <span class="slider-label">05 — Presencia (Radio)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tu sketch de p5 -->
+  <script src="sketch.js"></script>
+</body>
+</html>

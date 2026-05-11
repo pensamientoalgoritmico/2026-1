@@ -1,0 +1,141 @@
+/* ============================================================
+   TIPOGRAFÍAS PERSONALIZADAS
+   Asegúrate de que los archivos .ttf estén en la misma carpeta
+   ============================================================ */
+@font-face {
+  font-family: 'Steelfish';
+  src: url('Steelfish Rounded Bd.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SwirlsAndCurls';
+  src: url('SwirlsandCurls.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Swirlvetica';
+  src: url('Swirlvetica.ttf') format('truetype');
+}
+
+/* ============================================================
+   RESET Y BASE
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #f0f0f0;
+  font-family: 'Steelfish', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   Organiza canvas (izquierda) + sliders (derecha) en fila
+   ============================================================ */
+#main-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ============================================================
+   COLUMNA IZQUIERDA: canvas + botones
+   ============================================================ */
+#canvas-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* El canvas de p5 tiene exactamente 600x400 */
+#canvas-container canvas {
+  display: block;
+  border: 1px solid #333;
+}
+
+/* ============================================================
+   BOTONES — en fila debajo del canvas
+   ============================================================ */
+#botones-container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: center;
+  width: 600px;
+}
+
+/* Estilo de todos los botones creados por p5 */
+#botones-container button {
+  font-family: 'Steelfish', sans-serif;
+  font-size: 14px;
+  background-color: #8099CE;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  cursor: pointer;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s;
+}
+
+#botones-container button:hover {
+  background-color: #CA7D10;
+}
+
+/* Estilo especial para el boton de Colapso */
+#botones-container button.btn-colapso {
+  background-color: #1e1e2e;
+  color: #ff7eb3;
+  border: 2px solid #ff7eb3;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255, 126, 179, 0.3);
+}
+
+#botones-container button.btn-colapso:hover {
+  background-color: #ff7eb3;
+  color: #1e1e2e;
+  box-shadow: 0 0 16px rgba(255, 126, 179, 0.6);
+}
+
+/* ============================================================
+   COLUMNA DERECHA: sliders numerados
+   ============================================================ */
+#sliders-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 4px;
+  min-width: 200px;
+}
+
+/* Cada bloque slider = label encima + input abajo */
+.slider-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Texto encima de cada slider */
+.slider-label {
+  font-family: 'Steelfish', sans-serif;
+  font-size: 12px;
+  color: #b0b8d4;
+  letter-spacing: 0.3px;
+}
+
+/* Los sliders creados por p5 se inyectan dentro de .slider-item */
+.slider-item input[type="range"] {
+  width: 180px;
+  cursor: pointer;
+  accent-color: #7b9fff;
+  background: transparent;
+}
