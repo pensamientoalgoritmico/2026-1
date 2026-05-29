@@ -1,7 +1,8 @@
-//Juliana Rojas. 
+//Juliana Rojas. 202326896
 //Diario descarga. herramienta entrega final
-//Es una herramienta emocional que puede ayudar a alguien a desestresarse y dejar de estar abrumado. No está pidiendo que la persona explique lo que siente sino que lo suelte en un lienzo en blanco a disposición de los pensamientos de cada uno. La idea es escribir como salga, sin estructura y sin coherencia. 
+//Es una herramienta emocional que puede ayudar a alguien a desestresarse y dejar de estar abrumado. No está pidiendo que la persona explique lo que siente sino que lo suelte en un lienzo en blanco a disposición de los pensamientos de cada uno. La idea es escribir como salga, sin estructura y sin coherencia.
 
+//Inicio código
 //Empiezo estableciendo las variables de mi herramienta
 //variable estados:
 let estado = 0; //controla en que momento de la herramienta estoy
@@ -22,7 +23,7 @@ let posX = 50;
 //variable Caja de texto
 let entradaTexto;
 //variable Lenguaje asemico
-let figuras = []; 
+let figuras = [];
 //variables Color de fondo
 let colorPicker; //personalizar el fondo
 let colorFondo = "#D4CFC0"; //el color elegido por el usuario
@@ -336,12 +337,13 @@ function preload() {
 
 //SETUP
 function setup() {
-  createCanvas(700, 500);
+  // NO EDITAR LA SIGUIENTE LINEA, HACE QUE SEA PANTALLA COMPLETA Y LO CENTRA EN WEB
+  createCanvas(windowWidth, windowHeight).parent("canvasContainer");
   textFont(font);
 
   //BOTON del estado 0. "Continuar"
   botonInicio = createButton("Continuar");
-  botonInicio.position(250, 400);
+  botonInicio.position(width / 2 - 100, height * 0.8);
   botonInicio.size(200, 50); //width,height.
 
   // estilos visuales
@@ -350,7 +352,7 @@ function setup() {
   botonInicio.style("border-radius", "12px"); //redondear esquinas
   botonInicio.style("font-family", "miFuente"); //usar mi fuente en el boton
   botonInicio.style("font-size", "20px"); // tamaño de la letra en px
-  botonInicio.style("cursor", "pointer");// que salga la manito
+  botonInicio.style("cursor", "pointer"); // que salga la manito
 
   //sobre el boton. funcion de que esta sobre la funcion
   botonInicio.mouseOver(cambiarHover);
@@ -380,7 +382,8 @@ function setup() {
 
   // BOTON del estado 2. "Guardar composicion"
   botonGuardar = createButton("Guardar composición");
-  botonGuardar.position(540, height + 30);
+  botonGuardar.position(width - 180, height - 70);
+  //botonGuardar.position(540, height + 30);
   botonGuardar.size(140, 45);
 
   // estilos visuales
@@ -396,7 +399,7 @@ function setup() {
   //fuera del boton
   botonGuardar.mouseOut(volverColorGuardar);
 
-  // qué hace el botón? Descarga la composicion como imagen 
+  // qué hace el botón? Descarga la composicion como imagen
   botonGuardar.mousePressed(guardarComposicion);
 
   // Esconder el boton porque aun no se debe ver
@@ -404,7 +407,8 @@ function setup() {
 
   // BOTON del estado 3. "Me siento liberado"
   botonLiberado = createButton("Me siento liberado");
-  botonLiberado.position(340, height + 30);
+  botonLiberado.position(width / 2 - 90, height - 70);
+  //botonLiberado.position(340, height + 30);
   botonLiberado.size(180, 45);
 
   // estilos visuales
@@ -422,32 +426,32 @@ function setup() {
 
   //Cuando orpimo ese boton me lleva a la reflexion
   botonLiberado.mousePressed(irAReflexion);
-  
+
   // Esconder el boton porque aun no se debe ver
   botonLiberado.hide();
 
-  
   //CAJA DE TEXTO que sale en estado 2
   entradaTexto = createElement("textarea");
-  entradaTexto.position(20, height + 20);
+  entradaTexto.position(20, height - 160);
+  //entradaTexto.position(20, height + 20);
 
   //place holder
   entradaTexto.attribute(
     "placeholder",
     "Escribe aquí todos tus pensamientos..."
   );
-  
+
   //limite de caracteres
   entradaTexto.attribute("maxlength", "400");
   //tamaño de la caja de texto
   entradaTexto.size(500, 120);
-  
+
   //estilos visuales
   entradaTexto.style("font-family", "miFuente");
   entradaTexto.style("font-size", "24px");
   entradaTexto.style("padding", "10px");
   entradaTexto.style("border-radius", "10px");
-  
+
   //Esconder la caja porque aun no se debe ver
   entradaTexto.hide();
 
@@ -455,15 +459,13 @@ function setup() {
   colorPicker = createColorPicker("#D4CFC0");
   colorPicker.position(290, 330);
   colorPicker.style("cursor", "pointer");
-  
+
   // Esconder el picker porque aun no se debe ver
   colorPicker.hide();
 
   botonInicio.mousePressed(cambiarEstado);
   botonEmpezar.mousePressed(cambiarEstado);
 }
-
-
 //DRAW
 function draw() {
   //aqui pongo los diferentes estados para poder separar el codigo por momentos
@@ -486,7 +488,7 @@ function draw() {
   // estado 3 = cuando el usuario se diga " me siento liberado"
   if (estado === 3) {
     pantallamomento1();
-    
+
     // Desaceleración del movimiento de las figuras, para simular esa calma de que "solte todo"
     for (let i = 0; i < figuras.length; i++) {
       let f = figuras[i];
@@ -496,26 +498,26 @@ function draw() {
       f.velRot *= 0.97;
     }
   }
-  //estado 4= reflexion final 
+  //estado 4= reflexion final
   if (estado === 4) {
-  pantallaFinal();
+    pantallaFinal();
   }
 }
 
-//MOMENTOS DE LA HERRAMIENTA 
+//MOMENTOS DE LA HERRAMIENTA
 // Primer momento en donde sale la introduccion de la herramienta. Con la ilustracion del diario
 function pantallaInstrucciones() {
-  //subo la ilustracion 
+  //subo la ilustracion
   image(ilustracionDiario, 220, 45, 280, 280);
 
   fill(0);
-  
+
   // titulo principal de la herramienta
   textAlign(CENTER, CENTER);
-  textSize(36); 
+  textSize(36);
   text("Tu DIARIO DE DESCARGA", width / 2, 60);
 
-  //parrafo en donde se da el contexto de lo que es 
+  //parrafo en donde se da el contexto de lo que es
   textSize(20);
   // márgenes para que no toque los bordes
   let margen = 120;
@@ -547,7 +549,7 @@ function vuelvenormalelcolor() {
   botonInicio.style("background-color", "#798C8F");
 }
 
-//Para cambiar de color los botones cuando se pasa el cursor: 
+//Para cambiar de color los botones cuando se pasa el cursor:
 
 // Para que el color del botonEmpezar cambie
 function cambiarHoverEmpezar() {
@@ -578,7 +580,7 @@ function volverColorLiberado() {
 
 //Cambio de estados
 function cambiarEstado() {
-  // Pasar de la introduccion a las instrucciones y personalizacion 
+  // Pasar de la introduccion a las instrucciones y personalizacion
   if (estado === 0) {
     estado = 1;
 
@@ -587,8 +589,7 @@ function cambiarEstado() {
 
     // mostrar botón empezar
     botonEmpezar.show();
-  }
-  else if (estado === 1) {
+  } else if (estado === 1) {
     estado = 2;
 
     entradaTexto.show();
@@ -611,7 +612,6 @@ function pantallaPersonalizacion() {
 
   text("Antes de empezar ten en cuenta...", width / 2, 80);
 
-
   // texto explicación teclas
   textSize(27);
 
@@ -622,9 +622,9 @@ function pantallaPersonalizacion() {
 
   text(instrucciones, 380, 250);
 
-  // añado la ilustracion de enter 
+  // añado la ilustracion de enter
   image(ilustracionEnter, 55, 110, 300, 300);
-  
+
   //me hizo falta la ilustracion de esc. no logre ponerla
 
   // mostrar selector de color
@@ -638,7 +638,6 @@ function pantallaPersonalizacion() {
 
 //Segundo momento en donde comienza a interactuar la herramienta con el usuario
 function pantallamomento1() {
-
   for (let i = 0; i < figuras.length; i++) {
     let f = figuras[i];
 
@@ -653,7 +652,7 @@ function pantallamomento1() {
     // rotación
     f.angulo = f.angulo + f.velRot;
 
-    // dibujo que sale 
+    // dibujo que sale
     push();
     translate(f.x, f.y);
     rotate(f.angulo);
@@ -727,7 +726,6 @@ function keyPressed() {
       figura.puntosX = datos.puntos.map((p) => p[0]);
       figura.puntosY = datos.puntos.map((p) => p[1]);
     } else {
-      
       figura.tipo = int(random(2));
       figura.puntosX = [];
       figura.puntosY = [];
@@ -765,13 +763,12 @@ function guardarComposicion() {
 function irAReflexion() {
   estado = 4;
 
-  botonGuardar.hide();// ocultar el boton de guardar
+  botonGuardar.hide(); // ocultar el boton de guardar
 
   botonLiberado.hide(); // ocultar el boton de liberacion
 }
 //pantalla final de mi herramienta en donde sale la reflexion
 function pantallaFinal() {
-
   background("#F5EBDC");
 
   fill(0);
@@ -795,7 +792,9 @@ function pantallaFinal() {
     "sin necesidad de explicarse.";
 
   text(reflexion, width / 2, height / 2);
-
 }
 
-
+//Ajustar el tamaño cuando cambia el tamaño de la pantalla
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
