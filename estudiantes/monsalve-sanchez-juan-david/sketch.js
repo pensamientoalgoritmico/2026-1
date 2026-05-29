@@ -33,7 +33,6 @@
 //APROPIACIÓN:
 //Las referencias fueron reinterpretadas en un contexto de regulación visual y de reorganización espacial, y adaptadas al lenguaje visual y técnico desarrollado durante el curso.
 
-
 let estado = "inicio";
 let modo = "";
 
@@ -59,9 +58,7 @@ let margenY = 80;
 // SETUP
 
 function setup() {
-  let canvas = createCanvas(1280, 720);
-
-  canvas.parent("canvasContainer");
+  createCanvas(1280, 720).parent("canvasContainer");
 
   textAlign(CENTER, CENTER);
 }
@@ -277,7 +274,7 @@ function formaBoton(x, y, forma) {
       y + 35,
 
       x + 35,
-      y + 35
+      y + 35,
     );
   }
 }
@@ -298,8 +295,8 @@ function pantallaInfinito() {
 
           c,
 
-          formaFinal
-        )
+          formaFinal,
+        ),
       );
     }
   }
@@ -542,8 +539,8 @@ function crearNivel() {
 
         forma,
 
-        objetivo
-      )
+        objetivo,
+      ),
     );
   }
 }
@@ -894,7 +891,6 @@ function reiniciarJuego() {
 
   nivel = 1;
 }
-
 
 //PRUEBAS DE USUARIO
 

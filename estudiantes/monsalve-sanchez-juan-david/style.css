@@ -8,9 +8,7 @@ html, body {
   font-family: sans-serif;
 }
 
-canvas {
-  display: block;
-}
+
 
 /* este elemento centra el canvas */
 #canvasContainer{
