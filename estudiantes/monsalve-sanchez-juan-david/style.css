@@ -18,13 +18,10 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-
 #info{
   margin: 60px;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
+
 
 h1{
   font-weight: normal;
