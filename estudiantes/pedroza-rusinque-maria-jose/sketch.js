@@ -335,6 +335,6 @@ function estiloBotonPrincipal(b) {
 }
 
 //Ajustar el tamaño cuando cambia el tamaño de la pantalla
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
+// function windowResized() {
+//   resizeCanvas(windowWidth, windowHeight);
+// }
