@@ -36,16 +36,6 @@ body {
 }
 
 /* ============================================================
-   CONTENEDOR GLOBAL VERTICAL
-   Añadido para que el sketch y el #info se apilen verticalmente
-   ============================================================ */
-#global-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ============================================================
    CONTENEDOR PRINCIPAL
    Organiza canvas (izquierda) + sliders (derecha) en fila
    ============================================================ */
@@ -149,10 +139,6 @@ body {
   accent-color: #7b9fff;
   background: transparent;
 }
-
-/* ============================================================
-   SECCIÓN DE INFORMACIÓN (Se mantiene tu estilo idéntico)
-   ============================================================ */
-#info {
+#info{
   margin: 60px;
 }
