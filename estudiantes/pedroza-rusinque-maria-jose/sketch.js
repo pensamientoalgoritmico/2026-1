@@ -5,8 +5,7 @@
 // La música suena mientras pintas y se apaga cuando paras.
 
 //// CONCEPTO:
-// Sky Collector nace de la idea de que la luz que te rodea.La cámara lee esa luz, te asigna un cielo, y tú lo conviertes en una pintura única. Decidí cambiar la idea completamente porque lo otro no me producía nada en verdad no me terminaba de convencer. 
-
+// Sky Collector nace de la idea de que la luz que te rodea.La cámara lee esa luz, te asigna un cielo, y tú lo conviertes en una pintura única. Decidí cambiar la idea completamente porque lo otro no me producía nada en verdad no me terminaba de convencer.
 
 // Referentes:
 // Reel de Instagram de app antiprocastinadora con cámara.
@@ -17,9 +16,8 @@
 //1.. Entender cómo funciona createCapture() y cómo dibujar el video en el canvas con image()
 //2. Aprender a leer el color de un pixel de la cámara con camara.get() y calcular luminosidad
 //3. Corregir errores cuando me lanzaba errores que no lograba corregir faltantes en arrays, variables no declaradas arriba
-//4. Separar la lógica de pantallas en funciones distintas para tener un solo draw() 
+//4. Separar la lógica de pantallas en funciones distintas para tener un solo draw()
 //5. Ayuda con el CSS para que el canvas ocupara toda la pantalla con position: fixed
-
 
 // VARIABLES GENERALES
 let fotos = [];
@@ -42,9 +40,9 @@ let colorTexto = [80, 70, 60];
 function preload() {
   miFuente = loadFont("Cute Notes.ttf");
   for (let i = 0; i < totalFotos; i++) {
-    fotos[i] = loadImage("cielo" + i + ".jpg");
+    fotos[i] = loadImage("FOTOS/cielo" + i + ".jpg");
   }
-  track = loadSound("lenta.mp3");
+  track = loadSound("AUDIOS/lenta.mp3");
 }
 
 // SETUP
@@ -59,7 +57,7 @@ function setup() {
   camara.size(320, 240);
   camara.hide();
 
-  // SLIDER — controla transparencia de las gotas, le pedi ayuda a chat 
+  // SLIDER — controla transparencia de las gotas, le pedi ayuda a chat
   sliderOpacidad = createSlider(5, 150, 60);
   sliderOpacidad.position(425, 650);
   sliderOpacidad.style("width", "200px");
@@ -72,13 +70,13 @@ function setup() {
   btnInicio.position(windowWidth / 2 - 100, windowHeight / 2 + 200);
   btnInicio.size(200, 50);
   estiloBotonPrincipal(btnInicio);
-  btnInicio.mouseOver(function() {
+  btnInicio.mouseOver(function () {
     btnInicio.style("background-color", "#8a7a6e");
   });
-  btnInicio.mouseOut(function() {
+  btnInicio.mouseOut(function () {
     btnInicio.style("background-color", "#50463C");
   });
-  btnInicio.mousePressed(function() {
+  btnInicio.mousePressed(function () {
     pantalla = "escaner";
     btnInicio.hide();
   });
@@ -88,11 +86,11 @@ function setup() {
   btnVolver.position(150, 640);
   btnVolver.size(180, 40);
   estiloBoton(btnVolver);
-  btnVolver.mouseOver(function() {
+  btnVolver.mouseOver(function () {
     btnVolver.style("background-color", "#50463C");
     btnVolver.style("color", "#FAF5EB");
   });
-  btnVolver.mouseOut(function() {
+  btnVolver.mouseOut(function () {
     btnVolver.style("background-color", "transparent");
     btnVolver.style("color", "#50463C");
   });
@@ -104,16 +102,16 @@ function setup() {
   btnFoto.position(950, 640);
   btnFoto.size(180, 40);
   estiloBoton(btnFoto);
-  btnFoto.mouseOver(function() {
+  btnFoto.mouseOver(function () {
     btnFoto.style("background-color", "#50463C");
     btnFoto.style("color", "#FAF5EB");
   });
-  btnFoto.mouseOut(function() {
+  btnFoto.mouseOut(function () {
     btnFoto.style("background-color", "transparent");
     btnFoto.style("color", "#50463C");
   });
-  btnFoto.mousePressed(function() {
-    saveCanvas("mi mood en un cielo", "jpg");
+  btnFoto.mousePressed(function () {
+    saveCanvas("mi-mood-en-un-cielo", "jpg");
   });
   btnFoto.hide();
 }
@@ -177,7 +175,11 @@ function diseñoEscaner() {
   textFont("Courier New");
   textSize(13);
   textAlign(CENTER);
-  text("posiciónate bien iluminado — presiona ESPACIO cuando estés listo", width / 2, height / 2 + 230);
+  text(
+    "posiciónate bien iluminado — presiona ESPACIO cuando estés listo",
+    width / 2,
+    height / 2 + 230,
+  );
 
   // Lee el pixel central y calcula luminosidad promedio
   let c = camara.get(camara.width / 2, camara.height / 2);
@@ -221,11 +223,10 @@ function diseñoPintura() {
     let imgActual = fotos[indiceAsignado];
     let col = imgActual.get(
       map(mouseX, 0, width, 0, imgActual.width),
-      map(mouseY, 0, height, 0, imgActual.height)
+      map(mouseY, 0, height, 0, imgActual.height),
     );
 
     gotas.push(new Gota(mouseX, mouseY, col, v));
-
   } else {
     // Baja el volumen cuando suelta el mouse
     if (track.isPlaying() == true) {
@@ -293,7 +294,7 @@ class Gota {
     this.y = y;
     this.c = c;
     this.tam = map(v, 0, 50, 30, 120); // tamaño según velocidad
-    this.ang = random(TWO_PI);          // ángulo aleatorio dependiendo de la persona
+    this.ang = random(TWO_PI); // ángulo aleatorio dependiendo de la persona
   }
 
   dibujar() {
