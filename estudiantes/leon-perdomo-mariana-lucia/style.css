@@ -44,6 +44,7 @@ body {
   flex-direction: row;
   gap: 24px;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 /* ============================================================
