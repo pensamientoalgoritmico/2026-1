@@ -11,7 +11,28 @@ function normalizeText(text) {
 }
 
 /**
- * 1. Carga de datos y generación de la lista
+ * Función reutilizable para añadir el efecto de vibración vertical en hover a un elemento contenedor
+ */
+function aplicarEfectoLetrasVibrantes(elementoContenedor) {
+  elementoContenedor.addEventListener("mouseenter", () => {
+    const spans = elementoContenedor.querySelectorAll(".letra-vibrante");
+    spans.forEach((span) => {
+      // Genera un desfase de altura aleatorio individual entre -12px y 12px
+      const desalineacionAleatoria = (Math.random() - 0.5) * 24;
+      span.style.transform = `translateY(${desalineacionAleatoria}px)`;
+    });
+  });
+
+  elementoContenedor.addEventListener("mouseleave", () => {
+    const spans = elementoContenedor.querySelectorAll(".letra-vibrante");
+    spans.forEach((span) => {
+      span.style.transform = `translateY(0px)`;
+    });
+  });
+}
+
+/**
+ * 1. Carga de datos y generación de la lista de estudiantes
  */
 fetch("estudiantes.json")
   .then((response) => response.json())
@@ -24,40 +45,27 @@ fetch("estudiantes.json")
       const folderName = `${normalizeText(est.last)}-${normalizeText(est.first)}`;
 
       link.href = `estudiantes/${folderName}/index.html`;
-      link.classList.add("enlace-estudiante"); // Clase única para controlar el hover sin alterar tamaños
+      link.classList.add("enlace-estudiante");
 
       // --- Fragmentar nombre en letras individuales ---
       const nombreCompleto = `${est.first} ${est.last}`;
       nombreCompleto.split("").forEach((letra) => {
         const span = document.createElement("span");
         span.textContent = letra === " " ? "\u00A0" : letra;
-        span.classList.add("letra-vibrante"); // Usamos una clase nueva y limpia
+        span.classList.add("letra-vibrante");
         link.appendChild(span);
       });
 
-      // --- EFECTO POR FILA: Al entrar, cada letra toma una altura aleatoria ---
-      link.addEventListener("mouseenter", () => {
-        const spans = link.querySelectorAll(".letra-vibrante");
-        spans.forEach((span) => {
-          // Genera un desfase de altura aleatorio individual entre -15px (arriba) y 15px (abajo)
-          const desalineacionAleatoria = (Math.random() - 0.5) * 30;
-          span.style.transform = `translateY(${desalineacionAleatoria}px)`;
-        });
-      });
-
-      // --- EFECTO POR FILA: Al salir, todas regresan a su línea base (0px) ---
-      link.addEventListener("mouseleave", () => {
-        const spans = link.querySelectorAll(".letra-vibrante");
-        spans.forEach((span) => {
-          span.style.transform = `translateY(0px)`;
-        });
-      });
+      // Asignar los eventos de hover al enlace del estudiante
+      aplicarEfectoLetrasVibrantes(link);
 
       li.appendChild(link);
       lista.appendChild(li);
     });
 
+    // Una vez cargada la lista, preparamos el título y los textos del cuerpo
     prepararTitulo();
+    prepararTextosParrafos();
   });
 
 /**
@@ -77,24 +85,43 @@ function prepararTitulo() {
 }
 
 /**
- * 3. Gestión de Interacción Global y Estela de Estrellitas
- * - Control de variables para arrastrar/presionar el mouse.
- * - Efecto imán del título principal.
+ * 3. NUEVO: Preparación de palabras clave dentro de los párrafos del HTML
+ */
+function prepararTextosParrafos() {
+  const frasesAFraccionar = document.querySelectorAll(".vibrar-frase");
+
+  frasesAFraccionar.forEach((contenedor) => {
+    const textoOriginal = contenedor.textContent;
+    contenedor.innerHTML = ""; // Limpiamos el texto plano
+    contenedor.classList.add("texto-vibrante-contenedor");
+
+    // Convertimos cada letra de la palabra destacada en spans independientes
+    textoOriginal.split("").forEach((letra) => {
+      const span = document.createElement("span");
+      span.textContent = letra === " " ? "\u00A0" : letra;
+      span.classList.add("letra-vibrante");
+      contenedor.appendChild(span);
+    });
+
+    // Le aplicamos la misma lógica de hover que tienen los estudiantes
+    aplicarEfectoLetrasVibrantes(contenedor);
+  });
+}
+
+/**
+ * 4. Gestión de Interacción Global y Estela de Estrellitas
  */
 let mousePresionado = false;
 
-// Detectar click inicial para activar la estela instantáneamente
 document.addEventListener("mousedown", (e) => {
   mousePresionado = true;
   crearEstrellaEstela(e.clientX, e.clientY);
 });
 
-// Desactivar la estela al soltar el click
 document.addEventListener("mouseup", () => {
   mousePresionado = false;
 });
 
-// Desactivar si el mouse sale del navegador
 document.addEventListener("mouseleave", () => {
   mousePresionado = false;
 });

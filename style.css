@@ -10,7 +10,6 @@ a {
 }
 a:hover {
   color: #ff3700;
-  font-size: 2rem;
 }
 h1{
   font-family: 'Stack Sans Notch', sans-serif !important;
@@ -29,9 +28,6 @@ p{
 
 span.highlight{
   font-family: 'Stack Sans Notch', sans-serif !important;
-  /* font-weight: 700;
-  color: #0ff;
-  text-transform: uppercase; */
 }
 
  #tituloPrincipal {
@@ -47,190 +43,6 @@ span.highlight{
   .intro{
     display: inline-block;
     max-width: 600px;
-
-  }
-  .listado{
-    display: inline-flex;
-    float: right;
-    font-family: 'Stack Sans Notch', sans-serif !important;
-  }
-
-
-
-li:hover::before {
-  color: #8dd1ff;
-  font-size: 1.5rem;
-  margin-right: 6px;
-}
-
-
-.figura {
-  position: absolute;
-  font-size: 4rem;
-  font-weight: bold;
-  transform: translate(-50%, -50%);
-  animation: aparecer 0.10s ease-out, desaparecer 8s forwards;
-}
-
-@keyframes aparecer {
-  from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-@keyframes desaparecer {
-  to { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-}
-
-/* 1. Configuración del Título y Nombres para que puedan moverse */
-#tituloPrincipal span, 
-.magnet-item {
-  display: inline-block; /* Crucial: sin esto no aceptan 'transform' */
-  transition: transform 0.2s ease-out, color 0.3s ease;
-  will-change: transform; /* Ayuda al navegador a animar sin lag */
-  cursor: pointer;
-  position: relative;
-  z-index: 5;
-}
-
-/* 2. Estilos para la lista de estudiantes */
-.letra-magnetica {
-  display: inline-block; /* Obligatorio para transform */
-  transition: transform 0.2s ease-out, color 0.3s ease;
-  will-change: transform;
-  white-space: pre; /* Mantiene los espacios correctamente */
-}
-
-/* Para que los enlaces no se vean raros al separar las letras */
-#lista-estudiantes a {
-  text-decoration: none;
-  color: inherit;
-  display: block; /* O inline-block según tu diseño */
-}
-
-.trail-text {
-  position: fixed;
-  pointer-events: none;
-  font-family: 'Stack Sans Notch', monospace;
-  font-weight: bold;
-  color: #99ff00;
-  z-index: 1000;
-  /* Animación que usa las variables calculadas en JS */
-  animation: explodeCircle 2s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-@keyframes explodeCircle {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  20% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    /* Mueve la letra a su posición en el círculo y la escala un poco */
-    transform: translate(calc(-50% + var(--dest-x)), calc(-50% + var(--dest-y))) scale(1.2);
-  }
-}
-/* 1. Por defecto, ocultamos el mensaje de error */
-#mensaje-escritorio {
-  display: none;
-}
-/* ============================================================
-   NUEVO EFECTO: DESAPARECER LETRAS DE ESTUDIANTES
-   ============================================================ */
-/* ============================================================
-   EFECTO: DISTORSIÓN INDIVIDUAL DE LETRAS (BASELINE)
-   ============================================================ */
-/* ============================================================
-   EFECTO: DISTORSIÓN DE LÍNEA EXCLUSIVA POR HOVER
-   ============================================================ */
-.letra-desaparece {
-  display: inline-block;
-  white-space: pre;
-  /* Al entrar se desajusta rápido, al salir regresa flotando suavemente */
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  will-change: transform;
-}
-/* ============================================================
-   NUEVO EFECTO: ESTELA DE ESTRELLITAS (Mágica)
-   ============================================================ */
-.star-trail {
-  position: fixed;
-  pointer-events: none; /* No interrumpe los clicks de los enlaces */
-  z-index: 9999;
-  font-family: sans-serif;
-  line-height: 1;
-  transform: translate(-50%, -50%);
-  animation: fadeAndFall 1.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@keyframes fadeAndFall {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 0;
-    /* La estrella cae levemente hacia abajo y rota de forma mágica mientras se desvanece */
-    transform: translate(-50%, calc(-50% + 40px)) scale(0.3) rotate(180deg);
-  }
-}
-
-
-
-body {
-  background-color: #000;
-  color: #fff;
-  font-family: ' DM Mono', sans-serif;
-  padding: 2rem;
-}
-a {
-  color: #fff;
-  text-decoration: none;
-}
-a:hover {
-  color: #ff3700;
-  font-size: 2rem;
-}
-h1{
-  font-family: 'Stack Sans Notch', sans-serif !important;
-  font-weight: 600;
-  color:#8dd1ff;
-}
-ul{
-    list-style: none;
-    font-size: 1.05rem;
-    text-align: center;
-    line-height: 1.75rem;
-}
-p{
-  font-size: 1.05rem;
-}
-
-span.highlight{
-  font-family: 'Stack Sans Notch', sans-serif !important;
-  /* font-weight: 700;
-  color: #0ff;
-  text-transform: uppercase; */
-}
-
- #tituloPrincipal {
-    display: flex;
-    gap: 0.2rem;
-  flex-wrap: wrap; /* permite salto de línea */
-  }
-  #tituloPrincipal span {
-    position: relative;
-    display: inline-block;
-  white-space: pre; /* mantiene espacios */
-  }
-  .intro{   display: inline-block;
-    max-width: 600px;
   }
   .listado{
     display: inline-flex;
@@ -242,7 +54,7 @@ span.highlight{
 #lista-estudiantes a {
   text-decoration: none;
   color: inherit;
-  display: block; /* O inline-block según tu diseño */
+  display: block; 
 }
 
 /* 1. Por defecto, ocultamos el mensaje de error */
@@ -253,14 +65,23 @@ span.highlight{
 
 
 /* ============================================================
-   NUEVOS AJUSTES: EFECTOS COMPLEMENTARIOS PARA JS
+   NUEVOS AJUSTES: EFECTOS INTERACTIVOS COMPLEMENTARIOS
    ============================================================ */
 
-/* Sobrescribe la regla general de a:hover SOLO para los estudiantes,
+/* Sobrescribe el hover para los elementos interactivos que vibran, 
    evitando que el texto crezca y rompa la animación de JavaScript */
-.enlace-estudiante:hover {
+.enlace-estudiante:hover,
+.texto-vibrante-contenedor:hover {
   font-size: 1.05rem !important; 
   color: #ff3700 !important;
+}
+
+/* Las palabras clave del párrafo no son bloques completos de lista, 
+   las hacemos inline-block para que fluyan bien en el texto */
+.texto-vibrante-contenedor {
+  display: inline-block;
+  cursor: pointer;
+  transition: color 0.25s ease;
 }
 
 /* Permite que cada letra actúe como un bloque independiente que puede
@@ -284,7 +105,7 @@ span.highlight{
 /* Estilos de la estela de estrellitas que aparece al presionar el click */
 .star-trail {
   position: fixed;
-  pointer-events: none; /* Asegura que la estrella no bloquee los clicks de los enlaces */
+  pointer-events: none; 
   z-index: 9999;
   line-height: 1;
   transform: translate(-50%, -50%);
@@ -301,7 +122,6 @@ span.highlight{
   }
   100% {
     opacity: 0;
-    /* La estrella cae sutilmente y gira sobre su propio eje mientras se desvanece */
     transform: translate(-50%, calc(-50% + 40px)) scale(0.3) rotate(180deg);
   }
 }
