@@ -57,15 +57,33 @@ function prepararTitulo() {
   });
 }
 
-/**
- * 3. Gestión de Movimiento del Mouse:
- * - Efecto Imán para el Título Principal
- * - Efecto Desaparecer para los Nombres de Estudiantes
- * - Creación de la Estela de Estrellitas
- */
-document.addEventListener("mousemove", (e) => {
-  const actualTime = Date.now();
+//**
+//  * 3. Gestión de Movimiento e Interacción del Mouse:
+//  * - Variable de control para saber si el mouse está presionado.
+//  * - Efecto Imán para el Título Principal (siempre activo al mover el mouse).
+//  * - Efecto Desaparecer para los Nombres de Estudiantes (siempre activo al mover el mouse).
+//  * - Creación de la Estela de Estrellitas (SOLO si el mouse está presionado).
 
+let mousePresionado = false; // Variable de control para la estela
+
+// Detectar cuando el usuario presiona el click en cualquier parte de la página
+document.addEventListener("mousedown", (e) => {
+  mousePresionado = true;
+  // Generar una primera estrella inmediatamente en el punto del click
+  crearEstrellaEstela(e.clientX, e.clientY);
+});
+
+// Detectar cuando el usuario suelta el click
+document.addEventListener("mouseup", () => {
+  mousePresionado = false;
+});
+
+// Detectar si el mouse sale de la ventana para apagar el efecto de forma segura
+document.addEventListener("mouseleave", () => {
+  mousePresionado = false;
+});
+
+document.addEventListener("mousemove", (e) => {
   // --- A. EFECTO IMÁN (Solo para el título principal) ---
   const letrasMagneticas = document.querySelectorAll(".letra-magnetica");
   letrasMagneticas.forEach((span) => {
@@ -91,7 +109,7 @@ document.addEventListener("mousemove", (e) => {
     }
   });
 
-  // --- B. NUEVO EFECTO: DESAPARECER (Para las letras de los estudiantes) ---
+  // --- B. EFECTO: DESAPARECER (Para las letras de los estudiantes) ---
   const letrasDesaparecen = document.querySelectorAll(".letra-desaparece");
   letrasDesaparecen.forEach((span) => {
     const rect = span.getBoundingClientRect();
@@ -102,52 +120,51 @@ document.addEventListener("mousemove", (e) => {
     const distanceY = e.clientY - centerY;
     const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-    const radioDesvanecer = 60; // Distancia en píxeles a la que empiezan a desaparecer
+    const radioDesvanecer = 60;
 
     if (distance < radioDesvanecer) {
-      // Mapea la opacidad de forma que entre más cerca esté el mouse, más invisible sea (0)
       let opacidad = mapRange(distance, 0, radioDesvanecer, 0, 1);
       span.style.opacity = opacidad;
     } else {
-      span.style.opacity = 1; // Totalmente visible si el mouse está lejos
+      span.style.opacity = 1;
     }
   });
 
-  // --- C. NUEVO EFECTO: ESTELA DE ESTRELLITAS ---
-  crearEstrellaEstela(e.clientX, e.clientY);
+  // --- C. EFECTO: ESTELA DE ESTRELLITAS (CONDICIONAL) ---
+  // Solo se ejecuta si la variable mousePresionado es verdadera (true)
+  if (mousePresionado) {
+    crearEstrellaEstela(e.clientX, e.clientY);
+  }
 });
 
 /**
- * Función auxiliar para generar las estrellas de la estela
+ * Función auxiliar para generar las estrellas de la estela (Se mantiene igual)
  */
 function crearEstrellaEstela(x, y) {
   const estrella = document.createElement("div");
   estrella.classList.add("star-trail");
   estrella.textContent = "★";
 
-  // Variaciones aleatorias para un look orgánico y mágico
-  const size = Math.random() * 12 + 8; // Tamaños aleatorios entre 8px y 20px
-  const offsetX = (Math.random() - 0.5) * 15; // Pequeña dispersión horizontal
-  const offsetY = (Math.random() - 0.5) * 15; // Pequeña dispersión vertical
+  const size = Math.random() * 12 + 8;
+  const offsetX = (Math.random() - 0.5) * 15;
+  const offsetY = (Math.random() - 0.5) * 15;
 
   estrella.style.left = `${x + offsetX}px`;
   estrella.style.top = `${y + offsetY}px`;
   estrella.style.fontSize = `${size}px`;
 
-  // Colores aleatorios brillantes (puedes ajustar esta paleta si lo deseas)
   const colores = ["#99ff00", "#8dd1ff", "#ff3700", "#ffffff", "#ffff00"];
   estrella.style.color = colores[Math.floor(Math.random() * colores.length)];
 
   document.body.appendChild(estrella);
 
-  // Se remueve de la pantalla una vez termine su animación CSS (1.2 segundos)
   setTimeout(() => {
     estrella.remove();
   }, 1200);
 }
 
 /**
- * Función de utilidad matemática tipo map() de p5.js
+ * Función de utilidad matemática tipo map() de p5.js (Se mantiene igual)
  */
 function mapRange(value, inMin, inMax, outMin, outMax) {
   return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
