@@ -62,6 +62,7 @@ function setup() {
 
   // SLIDER
   slider = createSlider(50, 120, 80, 10);
+  slider.parent("canvasContainer");
 
   slider.position(240, 470);
 
@@ -71,6 +72,7 @@ function setup() {
 
   // BOTÓN
   botonReset = createButton("REINICIAR");
+  botonReset.parent("canvasContainer");
 
   botonReset.position(300, 510);
 
