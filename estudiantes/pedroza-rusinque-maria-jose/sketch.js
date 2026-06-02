@@ -59,6 +59,7 @@ function setup() {
 
   // SLIDER — controla transparencia de las gotas, le pedi ayuda a chat
   sliderOpacidad = createSlider(5, 150, 60);
+  sliderOpacidad.parent("canvasContainer");
   sliderOpacidad.position(425, 650);
   sliderOpacidad.style("width", "200px");
   sliderOpacidad.style("cursor", "pointer");
@@ -67,6 +68,7 @@ function setup() {
 
   // BOTON INICIO — lleva del intro al escáner
   btnInicio = createButton("INICIAR ESCÁNER");
+  btnInicio.parent("canvasContainer");
   btnInicio.position(windowWidth / 2 - 100, windowHeight / 2 + 200);
   btnInicio.size(200, 50);
   estiloBotonPrincipal(btnInicio);
@@ -83,6 +85,7 @@ function setup() {
 
   // BOTON REINICIAR — vuelve a intro
   btnVolver = createButton("NUEVA BÚSQUEDA 🔄");
+  btnVolver.parent("canvasContainer");
   btnVolver.position(150, 640);
   btnVolver.size(180, 40);
   estiloBoton(btnVolver);
@@ -100,6 +103,7 @@ function setup() {
   // BOTON GUARDAR — guarda el canvas como imagen jpg
   btnFoto = createButton("GUARDAR OBRA ⬇️");
   btnFoto.position(950, 640);
+  btnFoto.parent("canvasContainer");
   btnFoto.size(180, 40);
   estiloBoton(btnFoto);
   btnFoto.mouseOver(function () {
@@ -328,4 +332,9 @@ function estiloBotonPrincipal(b) {
   b.style("font-size", "15px");
   b.style("letter-spacing", "2px");
   b.style("cursor", "pointer");
+}
+
+//Ajustar el tamaño cuando cambia el tamaño de la pantalla
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }

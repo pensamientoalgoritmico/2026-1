@@ -6,7 +6,38 @@ html, body {
   color: #50463C;
   font-family: 'Courier New', monospace;
 }
-canvas {
+
+/*este elemento centra el canvas */
+#canvasContainer{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#info{
+  margin: 60px;
+}
+
+h1{
+  font-weight: normal;
+}
+
+h2{
+   font-weight: normal;
+}
+
+#return{
+  color:white;
+  font-size:20px;
+  text-decoration:none;
+}
+
+#return:hover{
+  color: #39FF14
+}
+/* canvas {
   display: block;
 }
 canvas {
@@ -14,8 +45,8 @@ canvas {
   width: 100% !important;
   height: 100% !important;
 }
-/* se me estaba cruzando feísimo el texto con mi título así que
-le pedí ayuda a chat y me dio el !important para forzar el tamaño del canvas y pues resolvió*/
+/* se me estaba cruzando feísimo el texto con mi título así que */
+/* le pedí ayuda a chat y me dio el !important para forzar el tamaño del canvas y pues resolvió*/
 /*es para forzar que ocupe el 100% del ancho y alto
 
 
