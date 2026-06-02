@@ -84,15 +84,15 @@ let estrellasCloset = [];
 //funcion preload, se ejecuta primero que todo
 function preload() {
   //fotos de ejemplo (predeterminadas) para que el usuario tenga una idea de como se veria
-  placeholderTop = loadImage("/assets/top.jpg");
-  placeholderBottom = loadImage("/assets/jean.jpg");
-  placeholderShoe = loadImage("/assets/tacones.jpg");
+  placeholderTop = loadImage("assets/top.jpg");
+  placeholderBottom = loadImage("assets/jean.jpg");
+  placeholderShoe = loadImage("assets/tacones.jpg");
 }
 
 //function setup
 function setup() {
   //crear el canva para que se adapte segun la pantalla
-   // NO EDITAR LA SIGUIENTE LINEA, HACE QUE SEA PANTALLA COMPLETA Y LO CENTRA EN WEB
+  // NO EDITAR LA SIGUIENTE LINEA, HACE QUE SEA PANTALLA COMPLETA Y LO CENTRA EN WEB
   createCanvas(windowWidth, windowHeight).parent("canvasContainer");
 
   //generar estrellas decorativas
@@ -115,7 +115,7 @@ function setup() {
     btnCloset.style("background-color", "#ff1493");
   });
   //click para cambiar de pantalla
-  btnCloset.mousePressed(function() {
+  btnCloset.mousePressed(function () {
     pantalla = "closet";
 
     //mostrar inputs de imagen subida por el usuario
@@ -213,10 +213,10 @@ function setup() {
   botonGuardar.style("cursor", "pointer"); //cursor cambia al pasar el mouse
 
   botonGuardar.mouseOver(() =>
-    botonGuardar.style("background-color", "#F3BDDF")
+    botonGuardar.style("background-color", "#F3BDDF"),
   );
   botonGuardar.mouseOut(() =>
-    botonGuardar.style("background-color", "#ff1493")
+    botonGuardar.style("background-color", "#ff1493"),
   );
 
   botonGuardar.mousePressed(guardarDato);
@@ -237,7 +237,7 @@ function setup() {
   btnGuardados.style("cursor", "pointer");
 
   btnGuardados.mouseOver(() =>
-    btnGuardados.style("background-color", "#1a001a")
+    btnGuardados.style("background-color", "#1a001a"),
   );
   btnGuardados.mouseOut(() => btnGuardados.style("background-color", "#222"));
 
@@ -377,27 +377,27 @@ function setup() {
   //botones lock para cada sección
   btnLockTop = crearLock(
     () => (lockTop = !lockTop),
-    () => lockTop
+    () => lockTop,
   );
   btnLockBottom = crearLock(
     () => (lockBottom = !lockBottom),
-    () => lockBottom
+    () => lockBottom,
   );
   btnLockShoe = crearLock(
     () => (lockShoe = !lockShoe),
-    () => lockShoe
+    () => lockShoe,
   );
 
   //inputs de imagen para el usuario
   inputTop = createFileInput(handleTop);
   inputBottom = createFileInput(handleBottom);
   inputShoe = createFileInput(handleShoe);
-  
-  inputTop.addClass("input-archivo");
-inputBottom.addClass("input-archivo");
-inputShoe.addClass("input-archivo");
 
- //arreglo para los inputs
+  inputTop.addClass("input-archivo");
+  inputBottom.addClass("input-archivo");
+  inputShoe.addClass("input-archivo");
+
+  //arreglo para los inputs
   [inputTop, inputBottom, inputShoe].forEach((inp) => {
     inp.style("color", "#fff");
     inp.style("font-size", "12px");
@@ -443,8 +443,7 @@ function estiloBoton(b) {
 
 //funcion de generar estrellas, para decoracion
 function generarEstrellas() {
-
-  // Estrellas de pantalla de inicio 
+  // Estrellas de pantalla de inicio
   let posicionesInicio = [
     { x: 100, y: 80, tam: 30, col: [255, 255, 255] },
     { x: 1700, y: 600, tam: 25, col: [255, 20, 147] },
@@ -499,18 +498,12 @@ function dibujarInicio() {
 
   let centroY = height / 2;
 
- //dibujar estrellas en la pantalla de inicio
+  //dibujar estrellas en la pantalla de inicio
   for (let e of estrellasInicio) {
+    let col = color(e.col[0], e.col[1], e.col[2], 200);
 
-  let col = color(e.col[0], e.col[1], e.col[2], 200);
-
-  dibujarEstrellaDecoY2K(
-    e.x,
-    e.y,
-    e.tam,
-    col
-  );
-}
+    dibujarEstrellaDecoY2K(e.x, e.y, e.tam, col);
+  }
 
   //textos de bienvenida
   textAlign(CENTER, CENTER);
@@ -528,7 +521,7 @@ function dibujarInicio() {
   text(
     "tu closet virtual - sube tu ropa - genera outfits",
     width / 2,
-    centroY + 140
+    centroY + 140,
   );
 
   //boton de closet
@@ -553,17 +546,11 @@ function dibujarCloset() {
   let c3 = width / 2 + separacion; // SHOES
 
   //dibujar estrellas del closet
- for (let e of estrellasCloset) {
+  for (let e of estrellasCloset) {
+    let col = color(e.col[0], e.col[1], e.col[2], 180);
 
-  let col = color(e.col[0], e.col[1], e.col[2], 180);
-
-  dibujarEstrellaDecoY2K(
-    e.x,
-    e.y,
-    e.tam,
-    col
-  );
-}
+    dibujarEstrellaDecoY2K(e.x, e.y, e.tam, col);
+  }
 
   textAlign(CENTER);
   textFont("monospace");
@@ -604,7 +591,7 @@ function dibujarCloset() {
         x - boxW / 2 + 5,
         centroY - 135,
         boxW - 10,
-        boxH - 10
+        boxH - 10,
       );
     } else {
       //si no hay fotos subidad, mostrar las imagenes predeterminadas
@@ -669,18 +656,16 @@ function dibujarCloset() {
   //cuadrado como un aviso para las instrucciones
   if (mostrarInfo) {
     fill(0, 0, 0, 210);
-     stroke(255, 20, 147);
+    stroke(255, 20, 147);
     rect(width / 2 - 260, centroY - 220, 520, 80, 20);
-  
 
     fill(255);
     textSize(15);
     noStroke();
     text(
-      "Recuerda subir tus imagenes con buena calidad\n" +
-        "y en fondo blanco\n",
+      "Recuerda subir tus imagenes con buena calidad\n" + "y en fondo blanco\n",
       width / 2,
-      centroY - 165
+      centroY - 165,
     );
   }
 }
@@ -725,7 +710,7 @@ function dibujarGuardados() {
     text(
       "No tienes outfits guardados aún.\nGenera uno y guárdalo desde el closet.",
       width / 2,
-      cuadroY + 80
+      cuadroY + 80,
     );
   } else {
     for (let i = 0; i < datosGuardados.length; i++) {
@@ -808,8 +793,6 @@ function dibujarGuardados() {
   }
 }
 
-
-
 // Agrega la foto al arreglo de tops
 function handleTop(file) {
   if (file.type === "image") {
@@ -854,8 +837,6 @@ function guardarDato() {
     inputTexto.value("");
   }
 }
-
-
 
 //funcion para dibujar las estrellas
 function dibujarEstrellaDecoY2K(x, y, tam, col) {
