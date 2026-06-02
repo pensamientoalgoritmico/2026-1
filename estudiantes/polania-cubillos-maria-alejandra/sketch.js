@@ -30,7 +30,7 @@ let tipoDeFlor = 1;
 
 function setup() {
   // NO EDITAR LA SIGUIENTE LINEA, HACE QUE SEA PANTALLA COMPLETA Y LO CENTRA EN WEB
-  createCanvas(800, 600).parent("canvasContainer");
+  createCanvas(800, 800).parent("canvasContainer");
   //sigue como siempre
   background(255, 255, 255);
   // colores
