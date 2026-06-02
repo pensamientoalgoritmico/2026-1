@@ -137,6 +137,43 @@ li:hover::before {
 #mensaje-escritorio {
   display: none;
 }
+/* ============================================================
+   NUEVO EFECTO: DESAPARECER LETRAS DE ESTUDIANTES
+   ============================================================ */
+.letra-desaparece {
+  display: inline-block;
+  white-space: pre;
+  transition: opacity 0.15s ease-out; /* Transición suave de visibilidad */
+  will-change: opacity;
+}
+
+/* ============================================================
+   NUEVO EFECTO: ESTELA DE ESTRELLITAS (Mágica)
+   ============================================================ */
+.star-trail {
+  position: fixed;
+  pointer-events: none; /* No interrumpe los clicks de los enlaces */
+  z-index: 9999;
+  font-family: sans-serif;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  animation: fadeAndFall 1.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes fadeAndFall {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    /* La estrella cae levemente hacia abajo y rota de forma mágica mientras se desvanece */
+    transform: translate(-50%, calc(-50% + 40px)) scale(0.3) rotate(180deg);
+  }
+}
 
 /* 2. Media Query para pantallas menores a 1024px */
 @media (max-width: 1023px) {
