@@ -62,9 +62,8 @@ function setup() {
 
   // SLIDER
   slider = createSlider(50, 120, 80, 10);
-
-  slider.position(width / 2 - 110, 490);
   slider.parent("canvasContainer");
+  slider.position(width / 2 - 110, 490);
 
   slider.style("width", "220px");
 
@@ -72,8 +71,8 @@ function setup() {
 
   // BOTÓN
   botonReset = createButton("REINICIAR");
-  botonReset.position(width / 2 - 55, 510);
   botonReset.parent("canvasContainer");
+  botonReset.position(width / 2 - 55, 510);
 
   botonReset.size(110, 35);
 
