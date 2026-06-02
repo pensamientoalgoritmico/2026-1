@@ -193,13 +193,13 @@ function diseñoEscaner() {
   textSize(18);
   if (lum > 160) {
     indiceAsignado = 1;
-    text("ILUMINACIÓN: CÁLIDA / ALTA ☀️", width / 2, 620);
+    text("ILUMINACIÓN: CÁLIDA / ALTA ☀️", width / 2, 650);
   } else if (lum > 90) {
     indiceAsignado = 7;
-    text("ILUMINACIÓN: SUAVE / MEDIA 🌅", width / 2, 620);
+    text("ILUMINACIÓN: SUAVE / MEDIA 🌅", width / 2, 650);
   } else {
     indiceAsignado = 15;
-    text("ILUMINACIÓN: DARK / BAJA 🌑", width / 2, 620);
+    text("ILUMINACIÓN: DARK / BAJA 🌑", width / 2, 650);
   }
 
   // Mira central — indica dónde se lee la luminosidad

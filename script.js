@@ -109,8 +109,8 @@ document.addEventListener("mousemove", (e) => {
     }
   });
 
-  // --- B. EFECTO: DESAPARECER (Para las letras de los estudiantes) ---
-  const letrasDesaparecen = document.querySelectorAll(".letra-desaparece");
+  // --- B. NUEVO EFECTO: DISTORSIÓN DE BASELINE ALEATORIA (Para las letras de los estudiantes) ---
+  const letrasDesaparecen = document.querySelectorAll(".letra-desaparece"); // Mantenemos la clase por compatibilidad
   letrasDesaparecen.forEach((span) => {
     const rect = span.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -120,13 +120,24 @@ document.addEventListener("mousemove", (e) => {
     const distanceY = e.clientY - centerY;
     const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-    const radioDesvanecer = 60;
+    const radioEfecto = 70; // Distancia a la que el mouse empieza a desordenar las letras
 
-    if (distance < radioDesvanecer) {
-      let opacidad = mapRange(distance, 0, radioDesvanecer, 0, 1);
-      span.style.opacity = opacidad;
+    if (distance < radioEfecto) {
+      // Si el mouse está cerca y la letra no se ha movido en este ciclo, le asignamos una altura loca
+      // Usamos un atributo personalizado para que no cambie de posición miles de veces por segundo de forma epiléptica
+      if (!span.dataset.movido) {
+        // Genera un número aleatorio entre -15px (arriba) y 15px (abajo)
+        const desalineacionAleatoria = (Math.random() - 0.5) * 30;
+
+        span.style.transform = `translateY(${desalineacionAleatoria}px)`;
+        span.style.color = "#ff3700"; // Opcional: cambia a tu color de acento rojo/naranja al alterarse
+        span.dataset.movido = "true";
+      }
     } else {
-      span.style.opacity = 1;
+      // Si el mouse se aleja, la letra regresa suavemente a su renglón original
+      span.style.transform = `translateY(0px)`;
+      span.style.color = "";
+      span.removeAttribute("data-movido");
     }
   });
 

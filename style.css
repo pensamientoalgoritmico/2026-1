@@ -140,13 +140,16 @@ li:hover::before {
 /* ============================================================
    NUEVO EFECTO: DESAPARECER LETRAS DE ESTUDIANTES
    ============================================================ */
+/* ============================================================
+   EFECTO: DISTORSIÓN INDIVIDUAL DE LETRAS (BASELINE)
+   ============================================================ */
 .letra-desaparece {
   display: inline-block;
   white-space: pre;
-  transition: opacity 0.15s ease-out; /* Transición suave de visibilidad */
-  will-change: opacity;
+  /* El transition suaviza el regreso a la normalidad cuando el mouse se va */
+  transition: transform 0.2s ease-out, color 0.2s ease-out; 
+  will-change: transform;
 }
-
 /* ============================================================
    NUEVO EFECTO: ESTELA DE ESTRELLITAS (Mágica)
    ============================================================ */
