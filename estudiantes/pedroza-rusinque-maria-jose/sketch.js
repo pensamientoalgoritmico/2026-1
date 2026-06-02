@@ -59,8 +59,8 @@ function setup() {
 
   // SLIDER — controla transparencia de las gotas, le pedi ayuda a chat
   sliderOpacidad = createSlider(5, 150, 60);
-  sliderOpacidad.parent("canvasContainer");
   sliderOpacidad.position(425, 650);
+  sliderOpacidad.parent("canvasContainer");
   sliderOpacidad.style("width", "200px");
   sliderOpacidad.style("cursor", "pointer");
   sliderOpacidad.style("accent-color", "#50463C");
@@ -68,8 +68,8 @@ function setup() {
 
   // BOTON INICIO — lleva del intro al escáner
   btnInicio = createButton("INICIAR ESCÁNER");
-  btnInicio.parent("canvasContainer");
   btnInicio.position(windowWidth / 2 - 100, windowHeight / 2 + 200);
+  btnInicio.parent("canvasContainer");
   btnInicio.size(200, 50);
   estiloBotonPrincipal(btnInicio);
   btnInicio.mouseOver(function () {
@@ -85,8 +85,8 @@ function setup() {
 
   // BOTON REINICIAR — vuelve a intro
   btnVolver = createButton("NUEVA BÚSQUEDA 🔄");
-  btnVolver.parent("canvasContainer");
   btnVolver.position(150, 640);
+  btnVolver.parent("canvasContainer");
   btnVolver.size(180, 40);
   estiloBoton(btnVolver);
   btnVolver.mouseOver(function () {
