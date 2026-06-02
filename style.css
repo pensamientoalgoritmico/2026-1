@@ -143,11 +143,14 @@ li:hover::before {
 /* ============================================================
    EFECTO: DISTORSIÓN INDIVIDUAL DE LETRAS (BASELINE)
    ============================================================ */
+/* ============================================================
+   EFECTO: DISTORSIÓN DE LÍNEA EXCLUSIVA POR HOVER
+   ============================================================ */
 .letra-desaparece {
   display: inline-block;
   white-space: pre;
-  /* El transition suaviza el regreso a la normalidad cuando el mouse se va */
-  transition: transform 0.2s ease-out, color 0.2s ease-out; 
+  /* Al entrar se desajusta rápido, al salir regresa flotando suavemente */
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   will-change: transform;
 }
 /* ============================================================

@@ -25,13 +25,31 @@ fetch("estudiantes.json")
 
       link.href = `estudiantes/${folderName}/index.html`;
 
-      // --- Fragmentar nombre en letras ---
+      // --- Fragmentar nombre en letras individuales ---
       const nombreCompleto = `${est.first} ${est.last}`;
       nombreCompleto.split("").forEach((letra) => {
         const span = document.createElement("span");
         span.textContent = letra === " " ? "\u00A0" : letra;
-        span.classList.add("letra-desaparece"); // Nueva clase para el efecto de desvanecimiento
+        span.classList.add("letra-desajustada"); // Clase limpia para la distorsión vertical
         link.appendChild(span);
+      });
+
+      // --- EFECTO POR FILA: Detectar cuando el mouse entra a este enlace específico ---
+      link.addEventListener("mouseenter", () => {
+        const spans = link.querySelectorAll(".letra-desajustada");
+        spans.forEach((span) => {
+          // Genera un desfase de altura aleatorio individual entre -12px y 12px
+          const desalineacionAleatoria = (Math.random() - 0.5) * 24;
+          span.style.transform = `translateY(${desalineacionAleatoria}px)`;
+        });
+      });
+
+      // --- EFECTO POR FILA: Detectar cuando el mouse sale de este enlace para regresar a su sitio ---
+      link.addEventListener("mouseleave", () => {
+        const spans = link.querySelectorAll(".letra-desajustada");
+        spans.forEach((span) => {
+          span.style.transform = `translateY(0px)`;
+        });
       });
 
       li.appendChild(link);
@@ -52,33 +70,30 @@ function prepararTitulo() {
   texto.split("").forEach((letra) => {
     const span = document.createElement("span");
     span.textContent = letra === " " ? "\u00A0" : letra;
-    span.classList.add("letra-magnetica"); // El título sigue usando el imán
+    span.classList.add("letra-magnetica");
     titulo.appendChild(span);
   });
 }
 
-//**
-//  * 3. Gestión de Movimiento e Interacción del Mouse:
-//  * - Variable de control para saber si el mouse está presionado.
-//  * - Efecto Imán para el Título Principal (siempre activo al mover el mouse).
-//  * - Efecto Desaparecer para los Nombres de Estudiantes (siempre activo al mover el mouse).
-//  * - Creación de la Estela de Estrellitas (SOLO si el mouse está presionado).
+/**
+ * 3. Gestión de Interacción Global y Estela de Estrellitas
+ * - Control de variables para arrastrar/presionar el mouse.
+ * - Efecto imán del título principal.
+ */
+let mousePresionado = false;
 
-let mousePresionado = false; // Variable de control para la estela
-
-// Detectar cuando el usuario presiona el click en cualquier parte de la página
+// Detectar click inicial para activar la estela instantáneamente
 document.addEventListener("mousedown", (e) => {
   mousePresionado = true;
-  // Generar una primera estrella inmediatamente en el punto del click
   crearEstrellaEstela(e.clientX, e.clientY);
 });
 
-// Detectar cuando el usuario suelta el click
+// Desactivar la estela al soltar el click
 document.addEventListener("mouseup", () => {
   mousePresionado = false;
 });
 
-// Detectar si el mouse sale de la ventana para apagar el efecto de forma segura
+// Desactivar de forma segura si el mouse sale de la ventana del navegador
 document.addEventListener("mouseleave", () => {
   mousePresionado = false;
 });
@@ -109,74 +124,38 @@ document.addEventListener("mousemove", (e) => {
     }
   });
 
-  // --- B. NUEVO EFECTO: DISTORSIÓN DE BASELINE ALEATORIA (Para las letras de los estudiantes) ---
-  const letrasDesaparecen = document.querySelectorAll(".letra-desaparece"); // Mantenemos la clase por compatibilidad
-  letrasDesaparecen.forEach((span) => {
-    const rect = span.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-    const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
-
-    const radioEfecto = 70; // Distancia a la que el mouse empieza a desordenar las letras
-
-    if (distance < radioEfecto) {
-      // Si el mouse está cerca y la letra no se ha movido en este ciclo, le asignamos una altura loca
-      // Usamos un atributo personalizado para que no cambie de posición miles de veces por segundo de forma epiléptica
-      if (!span.dataset.movido) {
-        // Genera un número aleatorio entre -15px (arriba) y 15px (abajo)
-        const desalineacionAleatoria = (Math.random() - 0.5) * 30;
-
-        span.style.transform = `translateY(${desalineacionAleatoria}px)`;
-        span.style.color = "#ff3700"; // Opcional: cambia a tu color de acento rojo/naranja al alterarse
-        span.dataset.movido = "true";
-      }
-    } else {
-      // Si el mouse se aleja, la letra regresa suavemente a su renglón original
-      span.style.transform = `translateY(0px)`;
-      span.style.color = "";
-      span.removeAttribute("data-movido");
-    }
-  });
-
-  // --- C. EFECTO: ESTELA DE ESTRELLITAS (CONDICIONAL) ---
-  // Solo se ejecuta si la variable mousePresionado es verdadera (true)
+  // --- B. EFECTO: ESTELA DE ESTRELLITAS CONDICIONAL ---
+  // Solo dibuja la estela si el usuario tiene el mouse presionado
   if (mousePresionado) {
     crearEstrellaEstela(e.clientX, e.clientY);
   }
 });
 
 /**
- * Función auxiliar para generar las estrellas de la estela (Se mantiene igual)
+ * Función auxiliar para generar las estrellas de la estela
  */
 function crearEstrellaEstela(x, y) {
   const estrella = document.createElement("div");
   estrella.classList.add("star-trail");
   estrella.textContent = "★";
 
-  const size = Math.random() * 12 + 8;
-  const offsetX = (Math.random() - 0.5) * 15;
-  const offsetY = (Math.random() - 0.5) * 15;
+  // Valores aleatorios para que la estela se vea orgánica y dinámica
+  const size = Math.random() * 12 + 8; // Tamaños entre 8px y 20px
+  const offsetX = (Math.random() - 0.5) * 15; // Pequeña dispersión horizontal
+  const offsetY = (Math.random() - 0.5) * 15; // Pequeña dispersión vertical
 
   estrella.style.left = `${x + offsetX}px`;
   estrella.style.top = `${y + offsetY}px`;
   estrella.style.fontSize = `${size}px`;
 
+  // Paleta de colores brillantes para las estrellas
   const colores = ["#99ff00", "#8dd1ff", "#ff3700", "#ffffff", "#ffff00"];
   estrella.style.color = colores[Math.floor(Math.random() * colores.length)];
 
   document.body.appendChild(estrella);
 
+  // Remueve el elemento del DOM una vez que la animación CSS termina (1.2s)
   setTimeout(() => {
     estrella.remove();
   }, 1200);
-}
-
-/**
- * Función de utilidad matemática tipo map() de p5.js (Se mantiene igual)
- */
-function mapRange(value, inMin, inMax, outMin, outMax) {
-  return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 }
