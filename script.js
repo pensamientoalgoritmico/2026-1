@@ -24,29 +24,30 @@ fetch("estudiantes.json")
       const folderName = `${normalizeText(est.last)}-${normalizeText(est.first)}`;
 
       link.href = `estudiantes/${folderName}/index.html`;
+      link.classList.add("enlace-estudiante"); // Clase única para controlar el hover sin alterar tamaños
 
       // --- Fragmentar nombre en letras individuales ---
       const nombreCompleto = `${est.first} ${est.last}`;
       nombreCompleto.split("").forEach((letra) => {
         const span = document.createElement("span");
         span.textContent = letra === " " ? "\u00A0" : letra;
-        span.classList.add("letra-desajustada"); // Clase limpia para la distorsión vertical
+        span.classList.add("letra-vibrante"); // Usamos una clase nueva y limpia
         link.appendChild(span);
       });
 
-      // --- EFECTO POR FILA: Detectar cuando el mouse entra a este enlace específico ---
+      // --- EFECTO POR FILA: Al entrar, cada letra toma una altura aleatoria ---
       link.addEventListener("mouseenter", () => {
-        const spans = link.querySelectorAll(".letra-desajustada");
+        const spans = link.querySelectorAll(".letra-vibrante");
         spans.forEach((span) => {
-          // Genera un desfase de altura aleatorio individual entre -12px y 12px
-          const desalineacionAleatoria = (Math.random() - 0.5) * 24;
+          // Genera un desfase de altura aleatorio individual entre -15px (arriba) y 15px (abajo)
+          const desalineacionAleatoria = (Math.random() - 0.5) * 30;
           span.style.transform = `translateY(${desalineacionAleatoria}px)`;
         });
       });
 
-      // --- EFECTO POR FILA: Detectar cuando el mouse sale de este enlace para regresar a su sitio ---
+      // --- EFECTO POR FILA: Al salir, todas regresan a su línea base (0px) ---
       link.addEventListener("mouseleave", () => {
-        const spans = link.querySelectorAll(".letra-desajustada");
+        const spans = link.querySelectorAll(".letra-vibrante");
         spans.forEach((span) => {
           span.style.transform = `translateY(0px)`;
         });
@@ -93,7 +94,7 @@ document.addEventListener("mouseup", () => {
   mousePresionado = false;
 });
 
-// Desactivar de forma segura si el mouse sale de la ventana del navegador
+// Desactivar si el mouse sale del navegador
 document.addEventListener("mouseleave", () => {
   mousePresionado = false;
 });
@@ -125,7 +126,6 @@ document.addEventListener("mousemove", (e) => {
   });
 
   // --- B. EFECTO: ESTELA DE ESTRELLITAS CONDICIONAL ---
-  // Solo dibuja la estela si el usuario tiene el mouse presionado
   if (mousePresionado) {
     crearEstrellaEstela(e.clientX, e.clientY);
   }
@@ -139,22 +139,19 @@ function crearEstrellaEstela(x, y) {
   estrella.classList.add("star-trail");
   estrella.textContent = "★";
 
-  // Valores aleatorios para que la estela se vea orgánica y dinámica
-  const size = Math.random() * 12 + 8; // Tamaños entre 8px y 20px
-  const offsetX = (Math.random() - 0.5) * 15; // Pequeña dispersión horizontal
-  const offsetY = (Math.random() - 0.5) * 15; // Pequeña dispersión vertical
+  const size = Math.random() * 12 + 8;
+  const offsetX = (Math.random() - 0.5) * 15;
+  const offsetY = (Math.random() - 0.5) * 15;
 
   estrella.style.left = `${x + offsetX}px`;
   estrella.style.top = `${y + offsetY}px`;
   estrella.style.fontSize = `${size}px`;
 
-  // Paleta de colores brillantes para las estrellas
   const colores = ["#99ff00", "#8dd1ff", "#ff3700", "#ffffff", "#ffff00"];
   estrella.style.color = colores[Math.floor(Math.random() * colores.length)];
 
   document.body.appendChild(estrella);
 
-  // Remueve el elemento del DOM una vez que la animación CSS termina (1.2s)
   setTimeout(() => {
     estrella.remove();
   }, 1200);
